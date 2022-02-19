@@ -17,7 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-#include <stdio.h>
+
+#include "oneshot.h"
+#include "swapper.h"
 
 enum userspace_layers {
     L_BASE = 0,
@@ -29,6 +31,10 @@ enum userspace_layers {
     L_FUN,
     L_QWERTY,
     L_QWERTY_RESET,
+};
+
+enum keycodes {
+    SW_LANG, // Switch to next input language (cmd+alt+space)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -105,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, KC_SCOLON, KC_4, KC_5, KC_6, KC_EQUAL,                           _______, KC_RSHIFT, KC_RGUI, LALT_T(KC_F15), RCTL_T(KC_F16), _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_GRAVE, KC_1, KC_2, KC_3, KC_BSLASH,                           _______, _______, _______, _______, _______, _______,
+      _______, KC_GRAVE, KC_1, KC_2, KC_3, KC_BSLASH,                           _______, _______, _______, _______, SW_LANG, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                        KC_DOT, KC_0,  KC_MINUS,         _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -153,7 +159,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
-#ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   if (!is_keyboard_master()) {
     return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
@@ -279,10 +284,17 @@ void oled_task_user(void) {
     }
 }
 
+bool sw_lang_active = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    set_keylog(keycode, record);
-  }
-  return true;
+    if (record->event.pressed) {
+        set_keylog(keycode, record);
+    }
+
+    update_swapper_three(
+        &sw_lang_active, KC_LCMD, KC_LALT, KC_SPC, SW_LANG,
+        keycode, record
+    );
+
+    return true;
 }
-#endif // OLED_DRIVER_ENABLE
