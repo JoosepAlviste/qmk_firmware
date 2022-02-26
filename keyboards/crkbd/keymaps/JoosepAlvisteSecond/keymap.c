@@ -11,12 +11,11 @@
 #define TAB_R G(S(KC_RBRC))
 #define SPACE_L A(G(KC_LEFT))
 #define SPACE_R A(G(KC_RGHT))
-#define LA_SYM MO(SYM)
+#define LA_NUM MO(NUM)
 #define LA_NAV MO(NAV)
 
 enum layers {
     DEF,
-    SYM,
     NAV,
     NUM,
 };
@@ -37,34 +36,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,  XXXXXXX,
         XXXXXXX, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,     XXXXXXX,
         XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  XXXXXXX,
-                                 KC_ESC, LA_NAV,  KC_LSFT,    KC_SPC,  LA_SYM, KC_BSPC
-    ),
-
-    [SYM] = LAYOUT_split_3x6_3(
-        XXXXXXX, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,   KC_CIRC, KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN, XXXXXXX,
-        XXXXXXX, KC_MINS, KC_UNDS, KC_EQL,  KC_PLUS, KC_GRAVE,  _______, OS_SHFT,  OS_CMD,  OS_ALT,  OS_CTRL, XXXXXXX,
-        XXXXXXX, KC_PIPE, KC_BSLS, KC_LBRC, KC_LCBR, KC_TILDE,  _______, KC_RCBR,  KC_RBRC, KC_COLN, KC_SCLN, XXXXXXX,
-                                   _______, _______, _______,   _______, _______, _______
-    ),
-
-    [NAV] = LAYOUT_split_3x6_3(
-        XXXXXXX, KC_TAB,  SW_WIN,  TAB_L,   TAB_R,   KC_VOLU,   RESET,   _______, _______, _______,  KC_DEL,  XXXXXXX,
-        XXXXXXX, OS_CTRL, OS_ALT,  OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_CAPS, XXXXXXX,
-        XXXXXXX, _______, SPACE_R, BACK,    FWD,     KC_MPLY,   HOME,    KC_PGDN, KC_PGUP, END,      SW_LANG, XXXXXXX,
-                                   _______, _______, _______,   _______, _______, _______
+                                 KC_ESC, LA_NAV,  KC_LSFT,    KC_SPC,  LA_NUM, KC_BSPC
     ),
 
     [NUM] = LAYOUT_split_3x6_3(
-        XXXXXXX, KC_1,    KC_2,    KC_3,   KC_4,    KC_5,      KC_6,    KC_7,     KC_8,    KC_9,    KC_0,    XXXXXXX,
-        XXXXXXX, OS_CTRL, OS_ALT, OS_CMD,  OS_SHFT, KC_F11,    KC_F12,  OS_SHFT, OS_CMD,  OS_ALT,  OS_CTRL, XXXXXXX,
-        XXXXXXX, KC_F1,   KC_F2,   KC_F3,  KC_F4,   KC_F5,     KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   XXXXXXX,
-                                  _______, _______, _______,    _______, _______, _______
+        _______, KC_LBRC,  KC_7, KC_8, KC_9, KC_RBRC,   _______, _______,  _______, _______, _______, _______,
+        _______, KC_SCLN,  KC_4, KC_5, KC_6, KC_EQL,    _______, OS_SHFT,  OS_CMD,  OS_ALT,  OS_CTRL, _______,
+        _______, KC_GRAVE, KC_1, KC_2, KC_3, KC_BSLS,   _______, _______,  _______, _______, _______, _______,
+                                 KC_9, KC_0, KC_MINS,   _______, _______, _______
+    ),
+
+    [NAV] = LAYOUT_split_3x6_3(
+        _______, KC_TAB,  SW_WIN,  TAB_L,   TAB_R,   KC_VOLU,   RESET,   _______, _______, _______,  KC_DEL,  _______,
+        _______, OS_CTRL, OS_ALT,  OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_CAPS, _______,
+        _______, _______, SPACE_R, BACK,    FWD,     KC_MPLY,   HOME,    KC_PGDN, KC_PGUP, END,      SW_LANG, _______,
+                                   _______, _______, _______,   _______, _______, _______
     ),
 };
 
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
-    case LA_SYM:
+    case LA_NUM:
     case LA_NAV:
         return true;
     default:
@@ -74,7 +66,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
 
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
-    case LA_SYM:
+    case LA_NUM:
     case LA_NAV:
     case KC_LSFT:
     case OS_SHFT:
@@ -123,10 +115,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     );
 
     return true;
-}
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, SYM, NAV, NUM);
 }
 
 enum combos {
