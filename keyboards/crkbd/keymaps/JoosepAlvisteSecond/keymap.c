@@ -120,14 +120,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 enum combos {
   LU_ENT,
   FP_TAB,
+  MCOMMA_CLN,
 };
 
 const uint16_t PROGMEM lu_combo[] = {KC_L, KC_U, COMBO_END};
 const uint16_t PROGMEM fp_combo[] = {KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM mcomma_combo[] = {KC_M, KC_COMM, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [LU_ENT] = COMBO(lu_combo, KC_ENT),
   [FP_TAB] = COMBO(fp_combo, KC_TAB),
+  [MCOMMA_CLN] = COMBO(mcomma_combo, KC_COLN),
 };
 
 #ifdef OLED_DRIVER_ENABLE
