@@ -121,16 +121,22 @@ enum combos {
   LU_ENT,
   FP_TAB,
   MCOMMA_CLN,
+  XC_MINS,
+  COMMDOT_UNDS,
 };
 
 const uint16_t PROGMEM lu_combo[] = {KC_L, KC_U, COMBO_END};
 const uint16_t PROGMEM fp_combo[] = {KC_F, KC_P, COMBO_END};
 const uint16_t PROGMEM mcomma_combo[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM commdot_combo[] = {KC_COMM, KC_DOT, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [LU_ENT] = COMBO(lu_combo, KC_ENT),
   [FP_TAB] = COMBO(fp_combo, KC_TAB),
   [MCOMMA_CLN] = COMBO(mcomma_combo, KC_COLN),
+  [XC_MINS] = COMBO(xc_combo, KC_MINS),
+  [COMMDOT_UNDS] = COMBO(commdot_combo, KC_UNDS),
 };
 
 #ifdef OLED_DRIVER_ENABLE
