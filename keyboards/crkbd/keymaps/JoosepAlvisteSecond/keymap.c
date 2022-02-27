@@ -18,6 +18,7 @@ enum layers {
     DEF,
     NAV,
     NUM,
+    SYM,
 };
 
 enum keycodes {
@@ -36,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, KC_Q,         KC_W, KC_F, KC_P, KC_G,    KC_J, KC_L, KC_U,    KC_Y,   KC_QUOT,      XXXXXXX,
         XXXXXXX, LCTL_T(KC_A), KC_R, KC_S, KC_T, KC_D,    KC_H, KC_N, KC_E,    KC_I,   RCTL_T(KC_O), XXXXXXX,
         XXXXXXX, KC_Z,         KC_X, KC_C, KC_V, KC_B,    KC_K, KC_M, KC_COMM, KC_DOT, KC_SLSH,      XXXXXXX,
-                             KC_ESC, LA_NAV,  KC_LSFT,    KC_SPC,  LA_NUM, KC_BSPC
+                             KC_ESC, LA_NAV,  KC_LSFT,    LT(SYM, KC_SPC),  LA_NUM, KC_BSPC
     ),
 
     [NUM] = LAYOUT_split_3x6_3(
@@ -51,6 +52,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, OS_CTRL, OS_ALT,  OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_CAPS, _______,
         _______, _______, SPACE_R, BACK,    FWD,     KC_MPLY,   HOME,    KC_PGDN, KC_PGUP, END,      SW_LANG, _______,
                                    _______, _______, _______,   _______, _______, _______
+    ),
+
+    [SYM] = LAYOUT_split_3x6_3(
+        _______, KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR,   _______, _______,  _______, _______, _______, _______,
+        _______, KC_COLN, KC_DLR,  KC_PERC, KC_CIRC, KC_PLUS,   _______, OS_SHFT,  OS_CMD,  OS_ALT,  OS_CTRL, _______,
+        _______, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE,   _______, _______,  _______, _______, _______, _______,
+                                   KC_LPRN, KC_RPRN, KC_UNDS,   _______, _______, _______
     ),
 };
 
